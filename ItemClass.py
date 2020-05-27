@@ -108,7 +108,7 @@ item_stats = {
     "one hit wonder": [one_hit_wonder.name, one_hit_wonder.damage, one_hit_wonder.defence, one_hit_wonder.rarity]
 }
 
-on_board_items = [iron_shield, leather_cap, leather_armour]
+on_board_items = [leather_cap, leather_armour]
 
 
 # Give player an item

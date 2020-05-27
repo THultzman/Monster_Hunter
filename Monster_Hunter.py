@@ -199,11 +199,11 @@ def main():
     GameBoard.theBoard[99] = MonsterClass.orc_boss.symbol
 
     # Place NPC
-    GameBoard.theBoard[NPCClass.the_trader.position] = NPCClass.the_trader.symbol
+    GameBoard.theBoard[NPCClass.the_trader.position] = NPCClass.the_trader.hidden
     if NPCClass.the_trader.position == GameBoard.theBoard[orc.position]:
         NPCClass.the_trader.position = gen_ran_pos()
 
-    GameBoard.theBoard[NPCClass.the_healer.position] = NPCClass.the_healer.symbol
+    GameBoard.theBoard[NPCClass.the_healer.position] = NPCClass.the_healer.hidden
     if NPCClass.the_healer.position == GameBoard.theBoard[orc.position]:
         NPCClass.the_healer.position = gen_ran_pos()
 
@@ -214,7 +214,6 @@ def main():
     # Place some normal items around the board
     GameBoard.theBoard[ItemClass.leather_armour.position] = ItemClass.leather_armour.hidden
     GameBoard.theBoard[ItemClass.leather_cap.position] = ItemClass.leather_cap.hidden
-    GameBoard.theBoard[ItemClass.iron_shield.position] = ItemClass.iron_shield.hidden
 
     print("\nWelcome to Monster_Hunter.\n\n"
           "Kill monsters, gather gold, buy better\n"

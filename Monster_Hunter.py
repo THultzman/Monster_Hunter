@@ -208,9 +208,9 @@ def main():
     PlayerClass.char.inventory.append(ItemClass.wooden_shield)
 
     # Place some normal items around the board
-    GameBoard.theBoard[ItemClass.leather_armour.position] = ItemClass.leather_armour.name
-    GameBoard.theBoard[ItemClass.leather_cap.position] = ItemClass.leather_cap.name
-    GameBoard.theBoard[ItemClass.iron_shield.position] = ItemClass.iron_shield.name
+    GameBoard.theBoard[ItemClass.leather_armour.position] = ItemClass.leather_armour.hidden
+    GameBoard.theBoard[ItemClass.leather_cap.position] = ItemClass.leather_cap.hidden
+    GameBoard.theBoard[ItemClass.iron_shield.position] = ItemClass.iron_shield.hidden
 
     print("\nWelcome to Monster_Hunter.\n\n"
           "Kill monsters, gather gold, buy better\n"

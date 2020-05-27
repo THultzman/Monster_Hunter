@@ -127,10 +127,14 @@ def checkEncounters():
 
     # All items that are on the board are in the on_board_items list. If player pos == item pos -> find item.
     for i in ItemClass.on_board_items:
-        if PlayerClass.char.position == i.position:
-            print("You found something!")
-            PlayerClass.char.add_item(i)
-            print(f"{i.name} was added to your inventory")
+        if not i.found:
+            if PlayerClass.char.position == i.position:
+                i.found = True
+                print("You found something!")
+                PlayerClass.char.add_item(i)
+                print(f"{i.name} was added to your inventory")
+        else:
+            pass
 
     # For every orc in the army, if the orc pos is same as player pos, but not defeated, discover the monster
     for orc in MonsterClass.army_of_orcs:

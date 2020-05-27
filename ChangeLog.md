@@ -40,6 +40,7 @@
 * Items can now be classified according to their rarirty: "Normal", "Rare", "Unique".
 * Added a boss to the map
 * First final objective introduced: Defeat the boss
+* Minor bug fixes
 * The Mystical Trader sells more items
 * Minor bug fixes
 

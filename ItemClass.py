@@ -1,4 +1,5 @@
 import PlayerClass
+from MonsterClass import gen_ran_pos
 
 
 class Item:
@@ -74,11 +75,11 @@ def unequip():
 # Create normal items
 wooden_stick = Item("Wooden Stick", "Weapon", " ", None, 5, 0, 0, 10, "Normal")
 wooden_shield = Item("Wooden Shield", "Shield", " ", None, 0, 5, 0, 10, "Normal")
-leather_cap = Item("Leather Cap", "Helmet", " ", None, 0, 7, 2, 17, "Normal")
-leather_armour = Item("Leather Armour", "Chest", " ", None, 0, 12, 2, 28, "Normal")
+leather_cap = Item("Leather Cap", "Helmet", " ", gen_ran_pos(), 0, 7, 2, 17, "Normal")
+leather_armour = Item("Leather Armour", "Chest", " ", gen_ran_pos(), 0, 12, 2, 28, "Normal")
 iron_sword = Item("Iron Sword", "Weapon", " ", None, 25, 0, 0, 120, "Normal")
 iron_armour = Item("Iron Armour", "Chest", " ", None, 0, 27, 0, 62, "Normal")
-iron_shield = Item("Iron Shield", "Shield", " ", None, 0, 22, 0, 48, "Normal")
+iron_shield = Item("Iron Shield", "Shield", " ", gen_ran_pos(), 0, 22, 0, 48, "Normal")
 iron_helmet = Item("Iron Helmet", "Helmet", " ", None, 0, 17, 0, 32, "Normal")
 
 # Create rare items
@@ -105,5 +106,8 @@ item_stats = {
 
     "one hit wonder": [one_hit_wonder.name, one_hit_wonder.damage, one_hit_wonder.defence, one_hit_wonder.rarity]
 }
+
+on_board_items = [iron_shield, leather_cap, leather_armour]
+
 
 # Give player an item

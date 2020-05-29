@@ -1,4 +1,4 @@
-# Monster_Hunter Development Ver 1.6
+# Monster_Hunter Development Ver 1.7
 
 import sys
 
@@ -10,6 +10,7 @@ import MonsterClass
 import ItemClass
 import NPCClass
 from MonsterClass import gen_ran_pos
+import SaveProgress
 
 
 def startGame():
@@ -29,6 +30,8 @@ def printHelp():
           "player stats View player statistics\n"
           "equip        Allows to equip an item\n"
           "unequip      Allows to unequip an item\n"
+          "save         Saves the game\n"
+          "load         Loads the save\n"
           "inventory    Check your inventory\n\n"
           "up           Move up\n"
           "down         Move down\n"
@@ -60,7 +63,7 @@ def gameAction():
     """
     game_action_dict = {
         "help": printHelp, "exit": sys.exit, "inventory": PlayerClass.char.show_inventory,
-        "item stats": ItemClass.showStats,
+        "item stats": ItemClass.showStats, "save": SaveProgress.makeSave, "load": SaveProgress.loadSave,
         "equip": ItemClass.equip, "unequip": ItemClass.unequip, "player stats": PlayerClass.char.showStats,
         "up": 10, "down": -10, "left": -1, "right": 1
     }
@@ -108,12 +111,13 @@ def checkEncounters():
     if PlayerClass.char.position == NPCClass.the_trader.position:
         print("--------------------------------------")
         print("\nYou found an NPC! The Mystical Trader.\n")
-        NPCClass.the_trader.hidden = NPCClass.the_trader.symbol
         NPCClass.the_trader.found = True
         NPCClass.tradeItem()
 
     if NPCClass.the_trader.found:
         GameBoard.theBoard[NPCClass.the_trader.position] = NPCClass.the_trader.symbol
+    elif not NPCClass.the_trader.found:
+        GameBoard.theBoard[NPCClass.the_trader.position] = NPCClass.the_trader.hidden
 
     if PlayerClass.char.position == NPCClass.the_healer.position:
         print("--------------------------------------")
@@ -199,13 +203,13 @@ def main():
     GameBoard.theBoard[99] = MonsterClass.orc_boss.symbol
 
     # Place NPC
-    GameBoard.theBoard[NPCClass.the_trader.position] = NPCClass.the_trader.hidden
-    if NPCClass.the_trader.position == GameBoard.theBoard[orc.position]:
-        NPCClass.the_trader.position = gen_ran_pos()
-
-    GameBoard.theBoard[NPCClass.the_healer.position] = NPCClass.the_healer.hidden
-    if NPCClass.the_healer.position == GameBoard.theBoard[orc.position]:
-        NPCClass.the_healer.position = gen_ran_pos()
+    for orc in MonsterClass.army_of_orcs:
+        GameBoard.theBoard[NPCClass.the_trader.position] = NPCClass.the_trader.hidden
+        GameBoard.theBoard[NPCClass.the_healer.position] = NPCClass.the_healer.hidden
+        while NPCClass.the_trader.position == orc.position:
+            NPCClass.the_trader.position = gen_ran_pos()
+        while NPCClass.the_healer.position == orc.position:
+            NPCClass.the_healer.position = gen_ran_pos()
 
     # Give player a wooden stick and a wooden shield
     PlayerClass.char.equipped_items["Weapon"] = ItemClass.wooden_stick

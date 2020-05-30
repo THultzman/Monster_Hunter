@@ -128,6 +128,8 @@ def checkEncounters():
 
     if NPCClass.the_healer.found:
         GameBoard.theBoard[NPCClass.the_healer.position] = NPCClass.the_healer.symbol
+    elif not NPCClass.the_healer.found:
+        GameBoard.theBoard[NPCClass.the_healer.position] = NPCClass.the_healer.hidden
 
     # All items that are on the board are in the on_board_items list. If player pos == item pos -> find item.
     for i in ItemClass.on_board_items:

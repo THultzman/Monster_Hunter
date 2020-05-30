@@ -64,3 +64,8 @@
 * "save" and "load" commands added to the available game commands
 * Players can now save the game progress and load the save at a later time
 * Items that are placed on the board at the beginning still need to be updated with the new save/load functionality, for now they are probably duplicated.
+
+**Monster_Hunter Dev Change v1.7.1**
+
+* Items now work properly with the save/load functionality 
+* Fixed the healer visibility issue where after a load, the healer if not found before the save, was visible after a load

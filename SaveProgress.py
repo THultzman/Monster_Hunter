@@ -10,57 +10,36 @@ import CombatSystem
 def checkEncounters():
     # This function checks for any encounters on the board between the player/monster/item.
 
+    # --- Check NPC encounters --- #
     if PlayerClass.char.position == NPCClass.the_trader.position:
-        print("--------------------------------------")
-        print("\nYou found an NPC! The Mystical Trader.\n")
         NPCClass.the_trader.found = True
-        NPCClass.tradeItem()
 
     if NPCClass.the_trader.found:
         GameBoard.theBoard[NPCClass.the_trader.position] = NPCClass.the_trader.symbol
-    elif not NPCClass.the_trader.found:
+    else:
         GameBoard.theBoard[NPCClass.the_trader.position] = NPCClass.the_trader.hidden
 
     if PlayerClass.char.position == NPCClass.the_healer.position:
-        print("--------------------------------------")
-        print("\nYou found an NPC! The Healer.\n")
-        NPCClass.the_healer.hidden = NPCClass.the_healer.symbol
         NPCClass.the_healer.found = True
-        NPCClass.healing()
 
     if NPCClass.the_healer.found:
         GameBoard.theBoard[NPCClass.the_healer.position] = NPCClass.the_healer.symbol
+    else:
+        GameBoard.theBoard[NPCClass.the_healer.position] = NPCClass.the_healer.hidden
 
-    # All items that are on the board are in the on_board_items list. If player pos == item pos -> find item.
+    # --- Check item encounters --- #
     for i in ItemClass.on_board_items:
         if not i.found:
             if PlayerClass.char.position == i.position:
                 i.found = True
-                print("You found something!")
                 PlayerClass.char.add_item(i)
-                print(f"{i.name} was added to your inventory")
         else:
             pass
 
-    # For every orc in the army, if the orc pos is same as player pos, but not defeated, discover the monster
+    # --- Check monster encounters --- #
     for orc in MonsterClass.army_of_orcs:
         if orc.defeated:
             pass
-        else:
-            if orc.position == PlayerClass.char.position:
-                print("\nYou found the monster!")
-                print(f"The {orc.name}")
-                orc.found = True
-
-                fight_flee = input("\nDo you want to fight? [y/n] > ")
-                if fight_flee == "y":
-                    GameBoard.theBoard[orc.position] = orc.symbol
-                    CombatSystem.battle(orc)
-
-                elif fight_flee == "n":
-                    pass
-                else:
-                    print("You stutter something as you run away in fear...")
     # If an orc is found, leave a symbol on the board
     for orc in MonsterClass.army_of_orcs:
         if orc.found:
@@ -71,24 +50,13 @@ def checkEncounters():
             else:
                 GameBoard.theBoard[orc.position] = " "
 
+    # --- Check Boss encounter --- #
     if MonsterClass.orc_boss.defeated:
-        print("You killed the boss, you win!")
-        sys.exit()
+        pass
     else:
         if MonsterClass.orc_boss.position == PlayerClass.char.position:
-            print("\nYou found the Destroyer Orc!")
-            print("Be careful, he's not like the other Orcs!")
             MonsterClass.orc_boss.found = True
 
-            boss_fight = input("\nDo you want to fight the boss? [y/n] > ")
-            if boss_fight == "y":
-                GameBoard.theBoard[MonsterClass.orc_boss.position] = MonsterClass.orc_boss.symbol
-                CombatSystem.battle(MonsterClass.orc_boss)
-
-            elif boss_fight == "n":
-                pass
-            else:
-                print("You stutter something as you run away in fear...")
     if MonsterClass.orc_boss.found:
         GameBoard.theBoard[MonsterClass.orc_boss.position] = MonsterClass.orc_boss.symbol
 
@@ -124,6 +92,8 @@ def makeSave():
         "monster7": MonsterClass.army_of_orcs[6],
         "monster8": MonsterClass.army_of_orcs[7],
         "monster9": MonsterClass.army_of_orcs[8],
+        # --- Items --- #
+        "board_items": ItemClass.on_board_items
     }
 
     pickle.dump(save_dict, open("save.p", "wb"))
@@ -207,6 +177,18 @@ def loadSave():
             GameBoard.theBoard[monster.position] = monster.symbol
         else:
             GameBoard.theBoard[monster.position] = monster.hidden
+
+    # --- Items --- #
+    # First reset on_board_items
+    ItemClass.on_board_items = []
+    GameBoard.theBoard[ItemClass.leather_cap.position] = " "
+    # If item is already found, pass, else add the item to on_board_items, replace on the board and make hidden
+    for i in load_dict['board_items']:
+        if i.found:
+            pass
+        else:
+            ItemClass.on_board_items.append(i)
+            GameBoard.theBoard[i.position] = i.hidden
 
     checkEncounters()
 

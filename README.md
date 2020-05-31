@@ -1,11 +1,11 @@
-# Monster_Hunter - Development branch (most up to date)
+
+# Monster_Hunter - Master Branch(v1.6)
+
 To start the game **_you will need all the .py files the same directory._** Then simply open your favourite command terminal and navigate to the directory of the Monster_Hunter.py. Once in the correct directory use:
 
     python Monster_Hunnter.py
           
 # Development Start
-The player starts with a basic weapon already equipped.
-
 For testing purposes time.sleep() has been commented out to speed up the process.
 
 # The Game
@@ -20,8 +20,8 @@ The game starts with a menu:
 
     Welcome to Monster_Hunter.
 
-    Kill monsters, gather gold, upgrade your
-    equipment and battle with the bosses.
+    Kill monsters, gather gold, buy better
+    equipment and battle with the boss.
 
     Available Commands:
 
@@ -56,11 +56,14 @@ The board is a 10x10 grid with cells.
 
 P - Player
 m - Monster
+B - Boss
+T - Trader NPC
+H - Healer NPC
 
     ----------------------------------------
     ----------------------------------------
     ----------------------------------------
-       |   |   |   |   |   |   |   |   |   |
+       |   |   |   |   |   |   |   |   | B |
     ----------------------------------------
        |   |   |   |   |   |   |   |   |   |
     ----------------------------------------
@@ -70,9 +73,9 @@ m - Monster
     ----------------------------------------
        |   |   |   |   |   |   |   |   |   |
     ----------------------------------------
-       |   |   |   |   |   |   |   |   |   |
+       |   |   |   | H |   |   |   |   |   |
     ----------------------------------------
-       |   |   |   |   |   |   |   |   |   |
+       |   |   |   |   |   | T |   |   |   |
     ----------------------------------------
        |   |   |   |   |   |   |   |   |   |
     ----------------------------------------

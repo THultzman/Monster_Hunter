@@ -69,3 +69,4 @@
 
 * Items now work properly with the save/load functionality 
 * Fixed the healer visibility issue where after a load, the healer if not found before the save, was visible after a load
+

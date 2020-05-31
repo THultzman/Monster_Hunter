@@ -1,4 +1,4 @@
-# Monster_Hunter Development Ver 1.7
+# Monster_Hunter  Ver 1.7
 
 import sys
 
@@ -131,6 +131,7 @@ def checkEncounters():
     elif not NPCClass.the_healer.found:
         GameBoard.theBoard[NPCClass.the_healer.position] = NPCClass.the_healer.hidden
 
+
     # All items that are on the board are in the on_board_items list. If player pos == item pos -> find item.
     for i in ItemClass.on_board_items:
         if not i.found:
@@ -161,6 +162,7 @@ def checkEncounters():
                     pass
                 else:
                     print("You stutter something as you run away in fear...")
+
     # If an orc is found, leave a symbol on the board
     for orc in MonsterClass.army_of_orcs:
         if orc.found:
@@ -219,6 +221,7 @@ def main():
 
     # Place some normal items around the board
     GameBoard.theBoard[ItemClass.leather_armour.position] = ItemClass.leather_armour.hidden
+
     GameBoard.theBoard[ItemClass.leather_cap.position] = ItemClass.leather_cap.hidden
 
     print("\nWelcome to Monster_Hunter.\n\n"

@@ -14,6 +14,15 @@ import SaveProgress
 
 
 def startGame():
+    # player_info is a tuple -> ([char stats], player_name)
+    player_info = PlayerClass.createCharacter()
+    PlayerClass.char.player = player_info[1]
+    PlayerClass.char.strength = player_info[0][0]
+    PlayerClass.char.defence = player_info[0][1]
+    PlayerClass.char.dexterity = player_info[0][2]
+    PlayerClass.char.intelligence = player_info[0][3]
+    PlayerClass.char.magic = player_info[0][4]
+
     GameBoard.draw_board(GameBoard.theBoard)
     gameAction()
 
@@ -44,7 +53,7 @@ def menuAction():
     Hold a dictionary with available commands in the menu of the game
     """
     menu_action_dict = {
-        "help": printHelp, "start": startGame, "exit": sys.exit
+        "help": printHelp, "start": startGame, "exit": sys.exit, "load": SaveProgress.loadSave,
     }
     while True:
         menu_action = input("What would you like to do? > ")
@@ -227,6 +236,7 @@ def main():
           "Available Commands:\n\n"
           "help     Display help menu\n"
           "start    Start the game\n"
+          "load     Load last save\n"
           "exit     Exit the game\n")
     menuAction()
 

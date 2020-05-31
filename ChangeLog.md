@@ -69,3 +69,22 @@
 
 * Items now work properly with the save/load functionality 
 * Fixed the healer visibility issue where after a load, the healer if not found before the save, was visible after a load
+
+**Monster_Hunter Dev Change v1.8**
+
+* Added 'load' to available menu commands
+* Starting the game will now prompt to create a character. There are 4 different races to pick from. Each race can select 1 of 4 specialties gifting additional bonuses
+* Dexterity, Intelligence and Magic added as character statistics
+* 'player stats' command will now display new statistics
+* New stats added to all items and to the item_stats dictionary
+
+The stuff below should come in later patches for 1.8
+* Added spells to the game
+* Wizard NPC added to the game. He sells spells
+
+* The above statistics are accounted for when the player is in combat
+    * Dexterity increases the chance of avoiding a hit
+    * Intelligence increases the chance of rolling a higher dice number
+    * Magic increases damage from spell
+
+ 

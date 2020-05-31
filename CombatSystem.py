@@ -10,6 +10,13 @@ def dice_roll():
     dice_number = random.randrange(1, 11)
     return dice_number
 
+'''
+def probability(chance_to_avoid):
+    # This function outputs a probability for a given action
+'''
+
+
+
 
 def attack():
     """
@@ -50,6 +57,10 @@ def monster_attack(monster):
 
     monster_hit = monster.attack * dice_dict[monster_roll]
     reduced_hit = monster_hit - PlayerClass.char.defence
+
+    chance_to_avoid = (PlayerClass.char.dexterity / dice_dict[monster_roll]) / 3
+
+
     if reduced_hit <= 0:
         reduced_hit = 0
 

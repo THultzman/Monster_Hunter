@@ -84,7 +84,7 @@ The stuff below should come in later patches for 1.8
 
 * The above statistics are accounted for when the player is in combat
     * Dexterity increases the chance of avoiding a hit
-    * Intelligence increases the chance of rolling a higher dice number
+    * Intelligence ~~increases the chance of rolling a higher dice number~~ will be required to cast spells. Different spells have an intelligence requirement
     * Magic increases damage from spell
 
  

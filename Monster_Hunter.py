@@ -1,5 +1,4 @@
-# Monster_Hunter Development Ver 1.8.1
-
+# Monster_Hunter Development Ver 1.8.2
 import sys
 import pickle
 
@@ -11,7 +10,6 @@ import MonsterClass
 import ItemClass
 import NPCClass
 from MonsterClass import gen_ran_pos
-import SaveProgress
 
 
 def startGame():
@@ -54,7 +52,7 @@ def menuAction():
     Hold a dictionary with available commands in the menu of the game
     """
     menu_action_dict = {
-        "help": printHelp, "start": startGame, "exit": sys.exit, "load": SaveProgress.loadSave,
+        "help": printHelp, "start": startGame, "exit": sys.exit, "load": loadSave,
     }
     menu = True
     while menu:
@@ -77,7 +75,7 @@ def gameAction():
     """
     game_action_dict = {
         "help": printHelp, "exit": sys.exit, "inventory": PlayerClass.char.show_inventory,
-        "item stats": ItemClass.showStats, "save": SaveProgress.makeSave, "load": SaveProgress.loadSave,
+        "item stats": ItemClass.showStats, "save": makeSave, "load": loadSave,
         "equip": ItemClass.equip, "unequip": ItemClass.unequip, "player stats": PlayerClass.char.showStats,
         "up": 10, "down": -10, "left": -1, "right": 1
     }
@@ -119,32 +117,23 @@ def makeMove(move):
     gameAction()
 
 
+def npcEncounter():
+    for npc in NPCClass.npc_func_dict:
+        if PlayerClass.char.position == npc.position:
+            print("--------------------------------------")
+            print(f"\nYou found an NPC! {npc.name}\n")
+            npc.found = True
+            NPCClass.npc_func_dict[npc]()
+        if npc.found:
+            GameBoard.theBoard[npc.position] = npc.symbol
+        else:
+            GameBoard.theBoard[npc.position] = npc.hidden
+
+
 def checkEncounters():
     # This function checks for any encounters on the board between the player/monster/item.
 
-    if PlayerClass.char.position == NPCClass.the_trader.position:
-        print("--------------------------------------")
-        print("\nYou found an NPC! The Mystical Trader.\n")
-        NPCClass.the_trader.found = True
-        NPCClass.tradeItem()
-
-    if NPCClass.the_trader.found:
-        GameBoard.theBoard[NPCClass.the_trader.position] = NPCClass.the_trader.symbol
-    elif not NPCClass.the_trader.found:
-        GameBoard.theBoard[NPCClass.the_trader.position] = NPCClass.the_trader.hidden
-
-    if PlayerClass.char.position == NPCClass.the_healer.position:
-        print("--------------------------------------")
-        print("\nYou found an NPC! The Healer.\n")
-        NPCClass.the_healer.hidden = NPCClass.the_healer.symbol
-        NPCClass.the_healer.found = True
-        NPCClass.healing()
-
-    if NPCClass.the_healer.found:
-        GameBoard.theBoard[NPCClass.the_healer.position] = NPCClass.the_healer.symbol
-    elif not NPCClass.the_healer.found:
-        GameBoard.theBoard[NPCClass.the_healer.position] = NPCClass.the_healer.hidden
-
+    npcEncounter()
     # All items that are on the board are in the on_board_items list. If player pos == item pos -> find item.
     for i in ItemClass.on_board_items:
         if not i.found:
@@ -314,17 +303,16 @@ def main():
 
     # Place NPC
     for orc in MonsterClass.army_of_orcs:
-        GameBoard.theBoard[NPCClass.the_trader.position] = NPCClass.the_trader.hidden
-        GameBoard.theBoard[NPCClass.the_healer.position] = NPCClass.the_healer.hidden
-        while NPCClass.the_trader.position == orc.position:
-            NPCClass.the_trader.position = gen_ran_pos()
-        while NPCClass.the_healer.position == orc.position:
-            NPCClass.the_healer.position = gen_ran_pos()
+        for npc in NPCClass.npc_func_dict:
+            GameBoard.theBoard[npc.position] = npc.hidden
+            while npc.position == orc.position:
+                npc.position = gen_ran_pos()
 
     # Give player a wooden stick and a wooden shield ( + Spell for testing )
     PlayerClass.char.equipped_items["Weapon"] = ItemClass.wooden_stick
     PlayerClass.char.inventory.append(ItemClass.wooden_shield)
 
+    # Temporary spell added to inventory for testing
     PlayerClass.char.inventory.append(ItemClass.fire_ball)
 
     # Place some normal items around the board

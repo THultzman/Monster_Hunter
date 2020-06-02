@@ -2,7 +2,6 @@ import sys
 import ItemClass
 import PlayerClass
 from MonsterClass import gen_ran_pos
-import GameBoard
 
 
 class Npc:
@@ -15,7 +14,7 @@ class Npc:
         self.found = found
 
         self.inventory = []
-        self.gold = 0
+        self.gold = 1000
 
 
 def tradeItem():
@@ -25,7 +24,6 @@ def tradeItem():
         sys.exit()
     elif sell_buy == "leave":
         pass
-
 
     elif sell_buy == "buy":
 
@@ -112,22 +110,68 @@ def healing():
         print("Stop wasting my time!")
 
 
+def sellSpell():
+    buy_spell = input('"Do not meddle in the affairs of Wizards, for they are subtle and quick to anger"\n'
+                      'So... Wanna buy some spells? [y/n] > ')
+    if buy_spell == "exit":
+        sys.exit()
+
+    elif buy_spell == "y":
+        print("----------------")
+        print("Wizard Inventory")
+        for spell in the_wizard.inventory:
+            print(f"Spell:       {spell.name}\n"
+                  f"Description: {spell.description}\n"
+                  f"Price:       {spell.value}")
+        print("----------------")
+
+        buy_item = input("Which spell would you like to buy? > ")
+        for i in the_wizard.inventory:
+            if i.name == buy_item:
+                if PlayerClass.char.gold >= i.value:
+                    PlayerClass.char.gold -= i.value
+                    PlayerClass.char.inventory.append(i)
+                    print("\nItem added to your inventory.")
+                else:
+                    print("\nYou don't have enough gold for that item.")
+
+            elif i.name != buy_item:
+                pass
+            else:
+                print("\nI don't know what you're saying")
+
+    else:
+        print("What a waste of time...")
+
+
 # Create an NPC
-the_trader = Npc("Mystic Trader", "T", "Trader", gen_ran_pos(), " ", False)
+the_trader = Npc("The Mystical Trader", "T", "Trader", gen_ran_pos(), " ", False)
 the_trader.gold = 1000
 
 the_healer = Npc("The Healer", "H", "Healer", gen_ran_pos(), " ", False)
 
+the_wizard = Npc("The Wizard", "W", "Wizard", gen_ran_pos(), " ", False)
+
 # Give items to an NPC
+# Normal
 the_trader.inventory.append(ItemClass.leather_cap)
 the_trader.inventory.append(ItemClass.leather_armour)
 the_trader.inventory.append(ItemClass.iron_helmet)
 the_trader.inventory.append(ItemClass.iron_shield)
 the_trader.inventory.append(ItemClass.iron_armour)
 the_trader.inventory.append(ItemClass.iron_sword)
-
+# Rare
 the_trader.inventory.append(ItemClass.dragon_plate)
 the_trader.inventory.append(ItemClass.half_moon_katana)
-
+# Unique
 the_trader.inventory.append(ItemClass.one_hit_wonder)
 
+# Wizard/Spells
+the_wizard.inventory.append(ItemClass.fire_ball)
+
+# Dictionary holding NPC functions
+npc_func_dict = {
+    the_trader: tradeItem,
+    the_healer: healing,
+    the_wizard: sellSpell,
+}

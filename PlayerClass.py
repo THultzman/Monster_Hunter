@@ -333,4 +333,4 @@ def createCharacter():
 
 char = Player("P", " ", 0, 100, 0, 0, 0, 0, 0, 0, 0)
 
-#Co-authored-by: torbray <66016078+torbray@users.noreply.github.com>
+# Co-authored-by: torbray <66016078+torbray@users.noreply.github.com>

@@ -88,7 +88,10 @@
 * Added spells to the game. Given that the spell is in the inventory and player meets intelligence requirement, he can cast a spell instead of a dice roll 
 * Fixed a bug where the game wouldn't save and load all player statistics
 
-The stuff below should come in later patches for 1.8
+**Monster_Hunter Dev Change v1.8.2**
 
-* Account for magic statistic when player is in combat. Magic increases damage from spells
-* Wizard NPC. Sells Spells
+* Monster_Hunter.py -> checkEncounters has been simplified. It now uses npcEncounters function to check for... npc encounters :)
+* Spells now have a description
+* Wizard NPC added. Sells Spells (only 1 for now :( and it's totally over-powered )
+* Placing NPCs on cells without monsters is now simplified with loops
+* Magic statistic is now accounted for when player is in combat. Magic increases damage from spells

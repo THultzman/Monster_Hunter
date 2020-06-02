@@ -104,14 +104,17 @@ def battle(monster):
                     while cast:
                         spell = input("Which spell to cast? > ")
                         for i in PlayerClass.char.inventory:
-                            if i.name == spell:
-                                if PlayerClass.char.intelligence < i.int_req:
-                                    print("You don't have enough intelligence to cast this spell")
-                                    battle(monster)
-                                else:
-                                    castSpell(spell, monster)
-                                    monster_attack(monster)
-                                    cast = False
+                            try:
+                                if i.name == spell:
+                                    if PlayerClass.char.intelligence < i.int_req:
+                                        print("You don't have enough intelligence to cast this spell")
+                                        battle(monster)
+                                    else:
+                                        castSpell(spell, monster)
+                                        monster_attack(monster)
+                                        cast = False
+                            except AttributeError:
+                                pass
 
                 elif action == "flee":
                     GameBoard.draw_board(GameBoard.theBoard)

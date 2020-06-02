@@ -30,13 +30,14 @@ class Spell:
     def __repr__(self):
         return self.name
 
-    def __init__(self, name, hidden, position, found, int_req, value):
+    def __init__(self, name, hidden, position, found, int_req, value, description):
         self.name = name
         self.hidden = hidden
         self.position = position
         self.found = found
         self.int_req = int_req
         self.value = value
+        self.description = description
 
 
 def showStats():
@@ -207,7 +208,8 @@ on_board_items = [leather_cap, leather_armour]
 
 def s_fire_ball(monster):
     # Cast a fireball that deals 60 base damage
-    reduced_hit = 60 - monster.defence
+
+    reduced_hit = (PlayerClass.char.magic + 60) - monster.defence
     if reduced_hit <= 0:
         # This prevents the damage from going negative
         reduced_hit = 0
@@ -224,4 +226,4 @@ spell_dict = {
 }
 
 # Create a spell
-fire_ball = Spell("Fire Ball", " ", None, False, 10, 50)
+fire_ball = Spell("Fire Ball", " ", None, False, 10, 50, "Cast a Fire Ball that deals 60 base damage to any enemy.")

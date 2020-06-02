@@ -35,15 +35,21 @@ class Player:
         if new_level > self.level:
             levelup = True
             print("You leveled up!")
-            print("You can level up one of the following: Health/Strength/Defence").lower()
+            print("You can level up one of the following: Health/Strength/Defence/Dexterity/Intelligence/Magic").lower()
             while levelup:
                 stat = input("Which will it be? > ")
-                if stat == "Hhalth":
-                    char.hp += 1
+                if stat == "health":
+                    char.hp += 5
                 elif stat == "strength":
                     char.strength += 1
                 elif stat == "defence":
                     char.defence += 1
+                elif stat == "dexterity":
+                    char.dexterity += 1
+                elif stat == "intelligence":
+                    char.intelligence += 5
+                elif stat == "magic":
+                    char.intelligence += 1
                 else:
                     print("Please pick a valid statistic.")
                     continue
@@ -300,7 +306,7 @@ def createCharacter():
                         the_player[4] += 3
                         correct_pick2 = True
                     elif race_type == 'thief':
-                        the_player[2] += 3
+                        the_player[2] += 100
                         the_player[3] += 3
                         correct_pick2 = True
             print(line)
@@ -326,3 +332,5 @@ def createCharacter():
 # name, player, position, hp, strength, defence, dexterity, intelligence, magic, level, xp
 
 char = Player("P", " ", 0, 100, 0, 0, 0, 0, 0, 0, 0)
+
+#Co-authored-by: torbray <66016078+torbray@users.noreply.github.com>

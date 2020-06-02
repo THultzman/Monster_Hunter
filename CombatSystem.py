@@ -4,18 +4,13 @@ import PlayerClass
 import time
 import sys
 import GameBoard
+import ItemClass
+
 
 def dice_roll():
     # Simple dice roll function
     dice_number = random.randrange(1, 11)
     return dice_number
-
-'''
-def probability(chance_to_avoid):
-    # This function outputs a probability for a given action
-'''
-
-
 
 
 def attack():
@@ -38,13 +33,20 @@ def deal_dmg(some_monster, player_hit):
     # The purpose of this function is to apply defensive bonus, deal damage to some_monster and to print the result.
     reduced_hit = player_hit - some_monster.defence
     if reduced_hit <= 0:
+        # This prevents the damage from going negative
         reduced_hit = 0
+
     some_monster.hp -= reduced_hit
     print("-------------------------------------------------")
     print(f"You hit {some_monster.name} for {round(reduced_hit, 2)} damage... {some_monster.name}"
           f" has {round(some_monster.hp, 2)}hp remaining")
     print("-------------------------------------------------")
     # time.sleep(4)
+
+
+def castSpell(a_spell, monster):
+    if a_spell in ItemClass.spell_dict:
+        ItemClass.spell_dict[a_spell](monster)
 
 
 def monster_attack(monster):
@@ -58,8 +60,13 @@ def monster_attack(monster):
     monster_hit = monster.attack * dice_dict[monster_roll]
     reduced_hit = monster_hit - PlayerClass.char.defence
 
+    # --- Decide whether it's a hit or miss (Dexterity) --- ###
     chance_to_avoid = (PlayerClass.char.dexterity / dice_dict[monster_roll]) / 3
-
+    x = random.randint(0, 100)
+    if x >= chance_to_avoid:
+        pass
+    else:
+        reduced_hit = 0
 
     if reduced_hit <= 0:
         reduced_hit = 0
@@ -84,13 +91,27 @@ def battle(monster):
                 sys.exit()
             else:
 
-                action = input("\nroll/flee? > ")
+                action = input("\nDo you want to [roll], use a [spell] or [flee]? > ")
                 if action == "roll":
                     print("\nIt's your turn to roll the dice... \n")
                     # time.sleep(2)
                     player_hit = attack()
                     deal_dmg(monster, player_hit)
                     monster_attack(monster)
+
+                elif action == 'spell':
+                    cast = True
+                    while cast:
+                        spell = input("Which spell to cast? > ")
+                        for i in PlayerClass.char.inventory:
+                            if i.name == spell:
+                                if PlayerClass.char.intelligence < i.int_req:
+                                    print("You don't have enough intelligence to cast this spell")
+                                    battle(monster)
+                                else:
+                                    castSpell(spell, monster)
+                                    monster_attack(monster)
+                                    cast = False
 
                 elif action == "flee":
                     GameBoard.draw_board(GameBoard.theBoard)

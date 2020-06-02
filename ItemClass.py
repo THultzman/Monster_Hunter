@@ -25,6 +25,20 @@ class Item:
         self.found = found
 
 
+class Spell:
+
+    def __repr__(self):
+        return self.name
+
+    def __init__(self, name, hidden, position, found, int_req, value):
+        self.name = name
+        self.hidden = hidden
+        self.position = position
+        self.found = found
+        self.int_req = int_req
+        self.value = value
+
+
 def showStats():
     # Shows item statistics to the player
     item = input("Lookup item stats for: ").lower()
@@ -188,4 +202,26 @@ item_stats = {
 
 on_board_items = [leather_cap, leather_armour]
 
-# Give player an item
+
+# --- Spell functions below - should start with s_followed_by_name --- #
+
+def s_fire_ball(monster):
+    # Cast a fireball that deals 60 base damage
+    reduced_hit = 60 - monster.defence
+    if reduced_hit <= 0:
+        # This prevents the damage from going negative
+        reduced_hit = 0
+    monster.hp -= reduced_hit
+    print("\nYou cast a spell...")
+    print("\n-------------------------------------------------")
+    print(f"You hit {monster.name} for {round(reduced_hit, 2)} damage... {monster.name}"
+          f" has {round(monster.hp, 2)}hp remaining")
+    print("-------------------------------------------------")
+
+
+spell_dict = {
+    "Fire Ball": s_fire_ball,
+}
+
+# Create a spell
+fire_ball = Spell("Fire Ball", " ", None, False, 10, 50)

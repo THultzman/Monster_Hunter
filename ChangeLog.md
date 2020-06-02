@@ -78,13 +78,17 @@
 * 'player stats' command will now display new statistics
 * New stats added to all items and to the item_stats dictionary
 
-The stuff below should come in later patches for 1.8
-* Added spells to the game
-* Wizard NPC added to the game. He sells spells
+**Monster_Hunter Dev Change v1.8.1**
 
+* Fixed load from main menu by moving SaveProgress.py into Monster_Hunter.py. SaveProgress.py is no longer required
+* Player can now level up dex, int and magic
 * The above statistics are accounted for when the player is in combat
     * Dexterity increases the chance of avoiding a hit
-    * Intelligence increases the chance of rolling a higher dice number
-    * Magic increases damage from spell
+    * Intelligence ~~increases the chance of rolling a higher dice number~~ will be required to cast spells. Different spells have different intelligence requirements
+* Added spells to the game. Given that the spell is in the inventory and player meets intelligence requirement, he can cast a spell instead of a dice roll 
+* Fixed a bug where the game wouldn't save and load all player statistics
 
- 
+The stuff below should come in later patches for 1.8
+
+* Account for magic statistic when player is in combat. Magic increases damage from spells
+* Wizard NPC. Sells Spells

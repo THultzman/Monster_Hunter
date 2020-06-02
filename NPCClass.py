@@ -1,6 +1,6 @@
 import sys
 import ItemClass
-import PlayerClass
+import PlayerClass as PC
 from MonsterClass import gen_ran_pos
 
 
@@ -49,9 +49,9 @@ def tradeItem():
         buy_item = input("Which item would you like to buy? > ")
         for i in the_trader.inventory:
             if i.name == buy_item:
-                if PlayerClass.char.gold >= i.value:
-                    PlayerClass.char.gold -= i.value
-                    PlayerClass.char.inventory.append(i)
+                if PC.char.gold >= i.value:
+                    PC.char.gold -= i.value
+                    PC.char.inventory.append(i)
                     print("\nItem added to your inventory.")
                 else:
                     print("\nYou don't have enough gold for that item.")
@@ -63,12 +63,12 @@ def tradeItem():
 
     elif sell_buy == "sell":
         sell_item = input("\nWhat is it that you would like to sell? > ")
-        for i in PlayerClass.char.inventory:
+        for i in PC.char.inventory:
             try:
                 if i.name == sell_item:
                     the_trader.inventory.append(i)
-                    PlayerClass.char.inventory.remove(i)
-                    PlayerClass.char.gold += i.value
+                    PC.char.inventory.remove(i)
+                    PC.char.gold += i.value
                     print("Pleasure to do business with you.")
                     print(f"{i.value} gold added to your sack")
                 elif i.name != sell_item:
@@ -82,25 +82,25 @@ def tradeItem():
 def healing():
     heal = input("Welcome to my shack, I can heal you for a small price if you want. [y/n] > ")
     if heal == "y":
-        if PlayerClass.char.hp >= 100:
+        if PC.char.hp >= 100:
             print("You're in a great shape, I can't heal you.")
         else:
             bonus_hp = 0
-            for i in PlayerClass.char.equipped_items:
+            for i in PC.char.equipped_items:
                 try:
-                    item = PlayerClass.char.equipped_items[i]
+                    item = PC.char.equipped_items[i]
                     bonus_hp += item.health
                 except AttributeError:
                     bonus_hp += 0
-            healing_need = (100 - PlayerClass.char.hp) + bonus_hp
+            healing_need = (100 - PC.char.hp) + bonus_hp
 
             healing_cost = healing_need / 5
             rounded_cost = round(healing_cost, 2)
             get_healed = input(f"It will cost you {rounded_cost} gold. Deal? [y/n] > ")
             if get_healed == "y":
-                if PlayerClass.char.gold >= rounded_cost:
-                    PlayerClass.char.gold -= rounded_cost
-                    PlayerClass.char.hp += healing_need
+                if PC.char.gold >= rounded_cost:
+                    PC.char.gold -= rounded_cost
+                    PC.char.hp += healing_need
                     print("All of your wounds magically disappear...")
                 else:
                     print("You don't have enough gold for that.")
@@ -128,9 +128,9 @@ def sellSpell():
         buy_item = input("Which spell would you like to buy? > ")
         for i in the_wizard.inventory:
             if i.name == buy_item:
-                if PlayerClass.char.gold >= i.value:
-                    PlayerClass.char.gold -= i.value
-                    PlayerClass.char.inventory.append(i)
+                if PC.char.gold >= i.value:
+                    PC.char.gold -= i.value
+                    PC.char.inventory.append(i)
                     print("\nItem added to your inventory.")
                 else:
                     print("\nYou don't have enough gold for that item.")
@@ -143,6 +143,35 @@ def sellSpell():
     else:
         print("What a waste of time...")
 
+def upgradeItem():
+    print("Welcome to my blacksmith shop traveller. We can upgrade most items! For a cost of course..")
+    print("")
+    print("Items in Inventory")
+    print("---------------------")
+    it = False
+    slit = None
+    invlist = []
+    for obj in PC.char.inventory:
+        invlist.append(obj)
+        print(obj.name)
+    selitem = input("Selected Item >")
+    for k in invlist:
+        if selitem == str.lower(k.name):
+            it = True
+            slit = k
+    if it:
+        if slit.damage >= 10:
+            print("Your item is already maxed out!")
+        else:
+            slit.damage += 1
+            slit.defence += 1
+            slit.magic += 1
+            print("")
+            print("Here is your upgraded item!")
+    else:
+        print("Can't find that item!")
+
+
 
 # Create an NPC
 the_trader = Npc("The Mystical Trader", "T", "Trader", gen_ran_pos(), " ", False)
@@ -151,6 +180,9 @@ the_trader.gold = 1000
 the_healer = Npc("The Healer", "H", "Healer", gen_ran_pos(), " ", False)
 
 the_wizard = Npc("The Wizard", "W", "Wizard", gen_ran_pos(), " ", False)
+
+
+the_blacksmith = Npc("The Blacksmith", "B", "Blacksmith", gen_ran_pos(), " ", False)
 
 # Give items to an NPC
 # Normal
@@ -174,4 +206,5 @@ npc_func_dict = {
     the_trader: tradeItem,
     the_healer: healing,
     the_wizard: sellSpell,
+    the_blacksmith: upgradeItem,
 }

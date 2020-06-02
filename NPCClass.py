@@ -155,6 +155,7 @@ def upgradeItem():
         invlist.append(obj)
         print(obj.name)
     selitem = input("Selected Item >")
+    print("")
     for k in invlist:
         if selitem == str.lower(k.name):
             it = True
@@ -166,7 +167,6 @@ def upgradeItem():
             slit.damage += 1
             slit.defence += 1
             slit.magic += 1
-            print("")
             print("Here is your upgraded item!")
     else:
         print("Can't find that item!")

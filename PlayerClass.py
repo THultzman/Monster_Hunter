@@ -28,7 +28,7 @@ class Player:
                                "Weapon": None,
                                "Shield": None
                                }
-        self.gold = 0
+        self.gold = 50000
 
     def levelUp(self):
         new_level = self.xp // 100

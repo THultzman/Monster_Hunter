@@ -143,34 +143,56 @@ def sellSpell():
     else:
         print("What a waste of time...")
 
+
 def upgradeItem():
-    print("Welcome to my blacksmith shop traveller. We can upgrade most items! For a cost of course..")
+    upgradeMultiplier = 5
+    print("Welcome to my blacksmith shop traveller. We can upgrade most items!"
+          " For a cost of course..(Lvl 1 upgrades are free)")
+    print("")
+    print("Your gold: " + str(PC.char.gold))
     print("")
     print("Items in Inventory")
     print("---------------------")
+
     it = False
     slit = None
     invlist = []
-    for obj in PC.char.inventory:
-        invlist.append(obj)
-        print(obj.name)
+    for obj in PC.char.inventory:  # Looping through player inventory and inserting into a new table
+        if obj.name != "Fire Ball": #YOU REALLY NEED TO MAKE SPELLS A SEPERATE DICT AND NOT IN INVENTORY DICT
+            invlist.append(obj)
+            print(obj.name + " Lvl: " + str(obj.u_times))  # Displaying inventory choices
     selitem = input("Selected Item >")
     print("")
     for k in invlist:
-        if selitem == str.lower(k.name):
+        if selitem == str.lower(k.name):  # Finding selected item in inventory
             it = True
-            slit = k
-    if it:
-        if slit.damage >= 10:
-            print("Your item is already maxed out!")
+            slit = k  # Putting the specific object from inventory into slit (selected item)
+    if it:  # If the item they input matches a item in their inventory continue
+        if PC.char.gold >= slit.u_times * upgradeMultiplier:  # Checking if they have enough gold
+            if slit.i_type == "Weapon":
+                if slit.u_times >= 10:  # If the item is already at max return
+                    print("Your item is already maxed out!")
+                else:
+                    PC.char.gold = PC.char.gold - (slit.u_times * upgradeMultiplier)
+                    slit.u_times += 1  # Adding to multiplier
+                    slit.damage = slit.u_times * slit.defdamage  # Damage of weapon is default damage times multiplier
+                    slit.damage = ((slit.defdamage * .5) * 2) + slit.damage  # Adding .5 times default damage for Defense and Magic
+                    print("Here is your upgraded item!")
+            elif slit.i_type == ("Shield" or "Helmet") or "Chest":
+                if slit.u_times >= 10:
+                    print("Your item is already maxed out!")
+                else:
+                    PC.char.gold = PC.char.gold - (slit.u_times * upgradeMultiplier)
+                    slit.u_times += 1
+                    slit.defence = slit.u_times * slit.defdefence
+                    slit.defence = ((slit.defdefence * .5) * 2) + slit.defence
+                    print("Here is your upgraded item!")
+            else:
+                print("Can't upgrade magic items!")  # Unless you want the blacksmith to be able to
         else:
-            slit.damage += 1
-            slit.defence += 1
-            slit.magic += 1
-            print("Here is your upgraded item!")
+            print("You don't have enough gold!")
     else:
         print("Can't find that item!")
-
 
 
 # Create an NPC
@@ -181,8 +203,7 @@ the_healer = Npc("The Healer", "H", "Healer", gen_ran_pos(), " ", False)
 
 the_wizard = Npc("The Wizard", "W", "Wizard", gen_ran_pos(), " ", False)
 
-
-the_blacksmith = Npc("The Blacksmith", "B", "Blacksmith", gen_ran_pos(), " ", False)
+the_blacksmith = Npc("The Blacksmith", "B", "Blacksmith", 1, " ", False)
 
 # Give items to an NPC
 # Normal

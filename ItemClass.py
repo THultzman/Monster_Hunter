@@ -15,7 +15,9 @@ class Item:
         self.hidden = hidden
         self.position = position
         self.u_times = 0
+        self.defdamage = damage
         self.damage = damage
+        self.defdefence = defence
         self.defence = defence
         self.health = health
         self.dexterity = dexterity

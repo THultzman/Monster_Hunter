@@ -205,7 +205,6 @@ def makeSave():
         # --- Player --- #
         "player_pos": PlayerClass.char.position,
         "player_inventory": inventory_list,
-        "player_spellbag": PlayerClass.char.spellbag,
         "player_eq": PlayerClass.char.equipped_items,
         "player_hp": PlayerClass.char.hp,
         "player_gold": PlayerClass.char.gold,
@@ -246,7 +245,6 @@ def loadSave():
     # Now place the player
     GameBoard.theBoard[PlayerClass.char.position] = PlayerClass.char.name
 
-    PlayerClass.char.spellbag = load_dict['player_spellbag']
     PlayerClass.char.inventory = load_dict['player_inventory']
     PlayerClass.char.equipped_items = load_dict['player_eq']
     PlayerClass.char.hp = load_dict['player_hp']

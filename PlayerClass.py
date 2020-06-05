@@ -22,6 +22,7 @@ class Player:
         self.level = level
         self.xp = xp
 
+        self.spellbag = []
         self.inventory = []
         self.equipped_items = {"Helmet": None,
                                "Chest": None,

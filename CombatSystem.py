@@ -75,6 +75,8 @@ def monster_attack(monster):
         print("You were able to avoid the attack!")
         reduced_hit = 0
 
+    if reduced_hit <= 0:
+        reduced_hit = 0
 
     PlayerClass.char.hp -= reduced_hit
     print("-------------------------------------------------")
